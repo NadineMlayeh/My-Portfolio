@@ -137,7 +137,7 @@ const projects = [
     description:
       'Interactive learning platform where children take online courses, instructors publish lessons and exercises, and admins track real-time usage.',
     stack: ['React', 'NestJS', 'PostgreSQL'],
-    media: '/projects/innovas.mp4',
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999042/innova_sped_1.mp4',
     github: 'https://github.com/NadineMlayeh/Learning-plateform',
     live: 'https://learning-plateform-nu.vercel.app',
   },
@@ -147,7 +147,7 @@ const projects = [
     description:
       'Home-appliance sales web app with inventory control, customer management, transaction tracking, and secure payment integration.',
     stack: ['React', 'Spring Boot', 'MySQL'],
-    media: '/projects/electrohamza.mp4',
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786998795/electrohamza.mp4',
     github: 'https://github.com/NadineMlayeh/Home-Appliances-Management-Website',
     live: 'https://home-appliances-management-website.onrender.com ',
   },
@@ -157,7 +157,7 @@ const projects = [
     description:
       'A website that teaches people, in an interactive way, how to prevent getting hacked — built for the Nuit de l’Info competition under its requested theme.',
     stack: ['JavaScript', 'HTML/CSS', 'UX Design'],
-    media: '/projects/hacker.png',
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999785/hacker_1.mp4',
     github: 'https://github.com/NadineMlayeh/Hacker-website',
     live: 'https://hackers-cry-zone.web.app/',
   },
