@@ -32,7 +32,7 @@ const profile = {
   location: 'Jammel, Tunisia',
   phone: '+216 96 424 436',
   email: 'nadine.mlayah@gmail.com',
-  github: 'https://github.com/NadineMlayah',
+  github: 'https://github.com/NadineMlayeh',
   linkedin: 'https://linkedin.com/in/nadine-mlayah',
   // Photo: drop your picture in public/ (e.g. public/me.jpg) and point to it here.
   photo: '/me.jpg',
