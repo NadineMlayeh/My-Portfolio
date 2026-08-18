@@ -1,4 +1,4 @@
-    import React, { useEffect, useMemo, useState } from 'react';
+    import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
@@ -18,6 +18,7 @@ import {
   Medal,
   Menu,
   Phone,
+  Play,
   ServerCog,
   Smartphone,
   Sparkles,
@@ -36,7 +37,7 @@ const profile = {
   linkedin: 'https://linkedin.com/in/nadine-mlayah',
   // Photo: drop your picture in public/ (e.g. public/me.jpg) and point to it here.
   photo: '/me.jpg',
-  tagline: 'I build complete products — web and mobile, from interface to API to deployment.',
+  tagline: 'I build complete products, web and mobile, from interface to API to deployment.',
   summary:
     'Software engineering graduate from ISIMM, working across the full stack with React, Angular, Spring Boot, and NestJS — and building mobile apps with Flutter and Android Studio. I know my way around shipping too: Docker, Kubernetes, and CI/CD pipelines.',
   facts: [
@@ -46,7 +47,7 @@ const profile = {
     { icon: Phone, label: 'Phone', value: '+216 96 424 436' },
   ],
   beyondCode:
-    'Outside of code, I led sponsorship at the ARSII ISIMM student association and stay active in the CPU Club — organizing, connecting people, and making things happen.',
+    'Outside of code, I led sponsorship at the ARSII ISIMM student association and stay active in the CPU Club. Organizing, connecting people, and making things happen.',
 };
 
 const navItems = ['About', 'Work', 'Projects', 'Awards', 'Skills', 'Contact'];
@@ -86,7 +87,7 @@ const experiences = [
     period: 'Feb 2026 — Jun 2026',
     company: 'Uptech, Tunisia',
     title: 'Software Engineering Intern',
-    project: 'ThePortal — after-sales service & product management platform',
+    project: 'Portal — after-sales service & product management platform',
     points: [
       'Designed and developed a full-stack, microservices platform (Angular frontend, Spring Boot APIs, MySQL) covering after-sales service, product, and user management.',
       'Built features end-to-end: from UI screens and REST endpoints to data models, with async communication wired through RabbitMQ and auth via Keycloak.',
@@ -119,7 +120,7 @@ const experiences = [
 
 const projects = [
   {
-    title: 'ThePortal',
+    title: 'Portal',
     type: 'Capstone · Enterprise platform',
     description:
       'After-sales service and product management platform built as a microservices architecture, with SSO, async messaging, object storage, and automated Kubernetes delivery.',
@@ -152,10 +153,10 @@ const projects = [
     live: 'https://home-appliances-management-website.onrender.com ',
   },
   {
-    title: 'HackeRcry Zone',
+    title: 'HackerCry Zone',
     type: 'Competition · Cybersecurity education',
     description:
-      'A website that teaches people, in an interactive way, how to prevent getting hacked — built for the Nuit de l’Info competition under its requested theme.',
+      'A website that teaches people, in an interactive way, how to prevent getting hacked, built for the Nuit de l’Info competition under its requested theme.',
     stack: ['JavaScript', 'HTML/CSS', 'UX Design'],
     media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999785/hacker_1.mp4',
     github: 'https://github.com/NadineMlayeh/Hacker-website',
@@ -492,13 +493,13 @@ function About({ fadeUp }) {
           viewport={{ once: true, margin: '-80px' }}
         >
           <p>
-            I&apos;m a software engineering graduate who enjoys the whole journey of building software — from the first
+            I&apos;m a software engineering graduate who enjoys the whole journey of building software, from the first
             sketch of an interface to the API behind it, and all the way to putting it in front of real users.
           </p>
           <p>
             I&apos;ve spent my internships going deep on the full stack: React and Angular on the frontend, Spring Boot and
             NestJS on the backend, and MySQL, PostgreSQL, or MongoDB underneath. I also build mobile apps with Flutter and
-            Android Studio — that balance of UI and data, design and logic, is exactly where I like to work.
+            Android Studio. That balance of UI and data, design and logic, is exactly where I like to work.
           </p>
           <p>
             When it comes to shipping, I&apos;m comfortable on the deployment side too — containerizing with Docker,
@@ -550,6 +551,20 @@ function Section({ id, eyebrow, title, children, index }) {
 
 function ProjectCard({ project, index, wide, fadeUp }) {
   const hasMedia = Boolean(project.media);
+  const isVideo = hasMedia && project.media.endsWith('.mp4');
+  const [hovered, setHovered] = useState(false);
+  const [canHover] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches);
+  const videoRef = useRef(null);
+
+  const handleEnter = () => {
+    setHovered(true);
+    videoRef.current?.play().catch(() => {});
+  };
+
+  const handleLeave = () => {
+    setHovered(false);
+    videoRef.current?.pause();
+  };
 
   return (
     <motion.article
@@ -559,11 +574,30 @@ function ProjectCard({ project, index, wide, fadeUp }) {
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
       transition={{ delay: index * 0.06 }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      onViewportLeave={() => videoRef.current?.pause()}
     >
       <div className="projectMedia">
         {hasMedia ? (
-          project.media.endsWith('.mp4') ? (
-            <video src={project.media} autoPlay muted loop playsInline />
+          isVideo ? (
+            <>
+              <video
+                ref={videoRef}
+                src={project.media}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls={canHover ? hovered : true}
+              />
+              {canHover && !hovered && (
+                <span className="videoHint">
+                  <Play size={14} />
+                  Hover to play
+                </span>
+              )}
+            </>
           ) : (
             <img src={project.media} alt={`${project.title} preview`} />
           )
