@@ -1,9 +1,11 @@
     import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
   Award,
+  ChevronLeft,
+  ChevronRight,
   Cloud,
   Code2,
   Database,
@@ -16,6 +18,7 @@ import {
   Mail,
   Medal,
   Menu,
+  Pause,
   Play,
   ServerCog,
   Smartphone,
@@ -50,6 +53,8 @@ const navItems = ['About', 'Work', 'Projects', 'Awards', 'Skills', 'Contact'];
 
 const ticker = [
   'React',
+  'TypeScript',
+  'Next.js',
   'Angular',
   'Spring Boot',
   'NestJS',
@@ -57,19 +62,22 @@ const ticker = [
   'Android',
   'MySQL',
   'PostgreSQL',
+  'Supabase',
   'MongoDB',
   'Docker',
   'Kubernetes',
+  'Gemini AI',
   'CI/CD',
 ];
 
 const skills = [
-  { title: 'Frontend', icon: Code2, items: ['React', 'Next.js', 'Angular', 'HTML','Tailwind CSS','Bootstrap','Framer Motion'] },
+  { title: 'Frontend', icon: Code2, items: ['React', 'Next.js', 'TypeScript', 'Angular', 'HTML', 'Tailwind CSS', 'React Query', 'Framer Motion'] },
   { title: 'Backend', icon: ServerCog, items: ['Spring Boot', 'NestJS', 'REST API', 'Java'] },
   { title: 'Mobile', icon: Smartphone, items: ['Flutter', 'Dart', 'Android Studio', 'Java'] },
-  { title: 'Data', icon: Database, items: ['MySQL', 'PostgreSQL', 'MongoDB'] },
+  { title: 'Data', icon: Database, items: ['MySQL', 'PostgreSQL', 'Supabase', 'MongoDB'] },
+  { title: 'AI & LLM', icon: Sparkles, items: ['Gemini API', 'AI Feature Design', 'Prompt Engineering', 'Structured JSON Output'] },
   { title: 'Languages & Tools', icon: Terminal, items: ['Python', 'C/C++', 'Git/GitHub'] },
-  { title: 'Deployment & Cloud', icon: Cloud, items: ['Docker', 'Kubernetes', 'GitLab CI/CD', 'AWS'] },
+  { title: 'Deployment & Cloud', icon: Cloud, items: ['Docker', 'Kubernetes', 'GitLab CI/CD', 'AWS', 'Vercel'] },
 ];
 
 const experiences = [
@@ -151,6 +159,23 @@ const projects = [
     media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999785/hacker_1.mp4',
     github: 'https://github.com/NadineMlayeh/Hacker-website',
     live: 'https://hackers-cry-zone.web.app/',
+  },
+  {
+    title: 'Job Tracker',
+    type: 'Personal · AI productivity app',
+    description:
+      'AI-powered job & PFE application tracker that turns a messy multi-platform job search into a structured pipeline. Track applications by company, position, status, location, type, tech stack, and source across table and kanban views, attach CVs and cover letters, define custom fields, and paste any job posting to auto-fill the entry with Gemini — always reviewable before saving.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Gemini API', 'Framer Motion'],
+    // Screenshots: drop captures in public/projects/job-tracker/ named 1.png, 2.png, 3.png, ...
+    // The card auto-scrolls through them and pauses on hover.
+    screens: [
+      '/projects/job-tracker/1.png',
+      '/projects/job-tracker/2.png',
+      '/projects/job-tracker/3.png',
+      '/projects/job-tracker/4.png',
+    ],
+    github: 'https://github.com/NadineMlayeh/job-applications-tracker',
+    live: 'https://job-applications-tracker-azure.vercel.app/',
   },
 ];
 
@@ -635,7 +660,9 @@ function ProjectCard({ project, index, wide, fadeUp }) {
         <span className="cmdPath">~/projects/{project.title.toLowerCase().replace(/\s+/g, '-')}</span>
       </div>
       <div className="projectMedia">
-        {hasMedia ? (
+        {project.screens && project.screens.length > 0 ? (
+          <ScreenshotGallery screens={project.screens} title={project.title} />
+        ) : hasMedia ? (
           isVideo ? (
             <>
               <video
@@ -701,6 +728,87 @@ function ProjectCard({ project, index, wide, fadeUp }) {
         </div>
       </div>
     </motion.article>
+  );
+}
+
+function ScreenshotGallery({ screens, title }) {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const [failed, setFailed] = useState({});
+
+  const valid = screens.map((src, i) => ({ src, i })).filter(({ i }) => !failed[i]);
+  const current = valid.find(({ i }) => i === index) ?? valid[0];
+  const currentPos = Math.max(valid.findIndex(({ i }) => i === index), 0);
+
+  const advance = (step) => {
+    if (valid.length <= 1) return;
+    setDirection(step);
+    setIndex((i) => (i + step + screens.length) % screens.length);
+  };
+
+  useEffect(() => {
+    if (paused || valid.length <= 1) return;
+    const id = setInterval(() => advance(1), 3000);
+    return () => clearInterval(id);
+  }, [paused, valid.length, screens.length]);
+
+  if (!valid.length) {
+    return (
+      <div className="mediaPlaceholder">
+        <span>{title}</span>
+        <small>screenshots_coming_soon</small>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="screensGallery"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="screensStage">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.img
+            key={current.src}
+            src={current.src}
+            alt={`${title} screenshot ${current.i + 1}`}
+            loading="lazy"
+            className="screensImg"
+            initial={{ opacity: 0, x: direction * 90 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction * -90 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            onError={() => setFailed((value) => ({ ...value, [current.i]: true }))}
+          />
+        </AnimatePresence>
+        <span className="screensCounter">
+          {currentPos + 1} / {valid.length}
+        </span>
+        <span className="screensState">
+          {paused ? <Pause size={12} /> : <Play size={12} />}
+          {paused ? 'Paused' : 'Auto'}
+        </span>
+        <button className="screensNav screensPrev" type="button" onClick={() => advance(-1)} aria-label="Previous screenshot">
+          <ChevronLeft size={18} />
+        </button>
+        <button className="screensNav screensNext" type="button" onClick={() => advance(1)} aria-label="Next screenshot">
+          <ChevronRight size={18} />
+        </button>
+      </div>
+      <div className="screensDots">
+        {valid.map(({ i }, pos) => (
+          <button
+            key={i}
+            type="button"
+            className={i === current.i ? 'screensDot active' : 'screensDot'}
+            onClick={() => setIndex(i)}
+            aria-label={`Go to screenshot ${pos + 1}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 

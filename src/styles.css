@@ -886,6 +886,131 @@ p {
   letter-spacing: 0.04em;
 }
 
+.screensGallery {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.screensStage {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+  background: var(--panel2);
+}
+
+.projectCard.wide .screensStage {
+  min-height: 320px;
+}
+
+.screensStage img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: var(--panel2);
+}
+
+.screensCounter,
+.screensState {
+  position: absolute;
+  top: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+}
+
+.screensCounter {
+  right: 12px;
+}
+
+.screensState {
+  left: 12px;
+}
+
+.screensState svg {
+  color: var(--red);
+}
+
+.screensNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--white);
+  opacity: 0;
+  transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease;
+  cursor: pointer;
+}
+
+.screensGallery:hover .screensNav {
+  opacity: 1;
+}
+
+.screensNav:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.screensPrev {
+  left: 12px;
+}
+
+.screensNext {
+  right: 12px;
+}
+
+.screensDots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 8px;
+}
+
+.screensDot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 180ms ease, transform 180ms ease;
+  cursor: pointer;
+}
+
+.screensDot:hover {
+  background: var(--muted);
+}
+
+.screensDot.active {
+  background: var(--red);
+  transform: scale(1.25);
+}
+
 .projectContent {
   display: grid;
   gap: 12px;
@@ -1451,6 +1576,10 @@ p {
   .projectCard.wide .projectMedia {
     min-height: 280px;
   }
+
+  .projectCard.wide .screensStage {
+    min-height: 280px;
+  }
 }
 
 @media (max-width: 860px) {
@@ -1573,7 +1702,15 @@ p {
     min-height: 210px;
   }
 
+  .screensStage {
+    min-height: 210px;
+  }
+
   .projectCard.wide .projectMedia {
+    min-height: 230px;
+  }
+
+  .projectCard.wide .screensStage {
     min-height: 230px;
   }
 

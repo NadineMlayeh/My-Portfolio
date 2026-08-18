@@ -13,6 +13,28 @@ Each project card has a `media` field in `src/main.jsx`. To show a picture, vide
 
 If `media` is empty, the card shows a styled placeholder until you add one.
 
+## Screenshot gallery (auto-scroll, pause on hover)
+
+Instead of a single `media` file, a card can show several screenshots that
+auto-scroll and pause while hovered. Use a `screens` array:
+
+```js
+{
+  title: 'Job Tracker',
+  screens: [
+    '/projects/job-tracker/1.png',
+    '/projects/job-tracker/2.png',
+    '/projects/job-tracker/3.png',
+  ],
+  github: '',
+  live: '',
+}
+```
+
+Drop the images in a folder like `public/projects/job-tracker/`, named to
+match the array. While hovered the rotation pauses; arrows and dots let
+visitors scrub through manually.
+
 ## Photo
 
 Your personal photo goes in `public/me.jpg` (or any `.jpg`/`.png` name). Then point to it in `src/main.jsx`:
