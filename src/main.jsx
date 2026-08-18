@@ -7,17 +7,15 @@ import {
   Cloud,
   Code2,
   Database,
+  ExternalLink,
   FileDown,
   Github,
   GraduationCap,
-  Languages,
   Linkedin,
   Lock,
   Mail,
-  MapPin,
   Medal,
   Menu,
-  Phone,
   Play,
   ServerCog,
   Smartphone,
@@ -35,28 +33,20 @@ const profile = {
   email: 'nadine.mlayah@gmail.com',
   github: 'https://github.com/NadineMlayeh',
   linkedin: 'https://linkedin.com/in/nadine-mlayah',
+  languages: ['Arabic', 'French', 'English'],
   // Photo: drop your picture in public/ (e.g. public/me.jpg) and point to it here.
   photo: '/me.jpg',
   tagline: 'I build complete products, web and mobile, from interface to API to deployment.',
   summary:
     'Software engineering graduate from ISIMM, working across the full stack with React, Angular, Spring Boot, and NestJS — and building mobile apps with Flutter and Android Studio. I know my way around shipping too: Docker, Kubernetes, and CI/CD pipelines.',
   facts: [
-    { icon: MapPin, label: 'Based in', value: 'Jammel, Tunisia' },
     { icon: GraduationCap, label: 'Degree', value: 'Software Engineering, ISIMM' },
-    { icon: Languages, label: 'Languages', value: 'Arabic · French · English' },
-    { icon: Phone, label: 'Phone', value: '+216 96 424 436' },
   ],
   beyondCode:
-    'Outside of code, I led sponsorship at the ARSII ISIMM student association and stay active in the CPU Club. Organizing, connecting people, and making things happen.',
+    'Outside of code, I served as Sponsor Manager for the ARSII ISIMM association—securing partnerships and driving community outreach—and stay active in the CPU Club. My leadership experience also extends to event coordination, having organized high-impact competitions like Hackathon ACT for ISIMM and the IT IMPACT Hackathon with ARSII.',
 };
 
 const navItems = ['About', 'Work', 'Projects', 'Awards', 'Skills', 'Contact'];
-
-const metrics = [
-  { value: '3+', label: 'hands-on internships' },
-  { value: '5', label: 'projects designed & built' },
-  { value: '3', label: 'languages I speak' },
-];
 
 const ticker = [
   'React',
@@ -178,9 +168,9 @@ const certifications = [
 ];
 
 const education = [
-  'Engineering Degree in Computer Science — Software Engineering · ISIMM, Monastir · 2023 – 2026',
-  'Integrated Preparatory Cycle · ISIMM, Monastir · 2021 – 2023',
-  'Baccalaureate in Computer Science — High Distinction · Lycée Jammel · 2020 – 2021',
+  { degree: 'Engineering Degree in Computer Science — Software Engineering', school: 'ISIMM, Monastir', period: '2023 – 2026' },
+  { degree: 'Integrated Preparatory Cycle', school: 'ISIMM, Monastir', period: '2021 – 2023' },
+  { degree: 'Baccalaureate in Computer Science — High Distinction', school: 'Lycée Jammel', period: '2020 – 2021' },
 ];
 
 function useScrollSpy(ids) {
@@ -227,11 +217,11 @@ function App() {
       <Header activeSection={activeSection} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Hero fadeUp={fadeUp} />
       <About fadeUp={fadeUp} />
-      <Section id="work" eyebrow="Experience" index={2}>
+      <Section id="work" eyebrow="Experience">
         <div className="timeline">
           {experiences.map((item, index) => (
             <motion.article
-              className="timelineItem"
+              className="expItem"
               key={item.company}
               variants={fadeUp}
               initial="hidden"
@@ -239,14 +229,20 @@ function App() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ delay: index * 0.08 }}
             >
-              <div className="timelineDate">{item.period}</div>
-              <div className="timelineBody">
-                <p className="company">{item.company}</p>
-                <h3>{item.title}</h3>
-                <p className="projectName">{item.project}</p>
-                <ul>
+              <span className="expDot" aria-hidden="true" />
+              <div className="expBody">
+                <div className="expHead">
+                  <h3>{item.title}</h3>
+                  <span className="expPeriod">{item.period}</span>
+                </div>
+                <p className="expCompany">{item.company}</p>
+                <p className="expProject">{item.project}</p>
+                <ul className="expPoints">
                   {item.points.map((point) => (
-                    <li key={point}>{point}</li>
+                    <li key={point}>
+                      <span>▸</span>
+                      {point}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -254,7 +250,7 @@ function App() {
           ))}
         </div>
       </Section>
-      <Section id="projects" eyebrow="Selected projects" title={<>Things I&apos;ve designed, built, and <em>shipped</em>.</>} index={3}>
+      <Section id="projects" eyebrow="Selected projects" title={<>Things I&apos;ve designed, built, and <em>shipped</em>.</>}>
         <div className="projectGrid">
           {projects.map((project, index) => (
             <ProjectCard
@@ -270,7 +266,6 @@ function App() {
       <section className="section" id="awards">
         <div className="sectionHeader">
           <div className="sectionMeta">
-            <span className="sectionNum">04</span>
             <p className="eyebrow">Recognition</p>
           </div>
         </div>
@@ -281,17 +276,27 @@ function App() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
         >
-          <div className="awardIcon">
-            <Medal size={26} />
+          <div className="cmdTitlebar">
+            <span className="cmdDot cmdDotRed" />
+            <span className="cmdDot" />
+            <span className="cmdDot" />
+            <span className="cmdPath">~/awards/nuit-de-linfo</span>
           </div>
           <div className="awardBody">
-            <p className="awardTag">{awards.tag}</p>
-            <h3>{awards.title}</h3>
-            <p>{awards.summary}</p>
+            <div className="awardHead">
+              <div className="awardIcon">
+                <Medal size={26} />
+              </div>
+              <div>
+                <p className="awardTag">{awards.tag}</p>
+                <h3>{awards.title}</h3>
+              </div>
+            </div>
+            <p className="awardSummary">{awards.summary}</p>
           </div>
         </motion.article>
       </section>
-      <Section id="skills" eyebrow="Technical range" index={5}>
+      <Section id="skills" eyebrow="Technical range">
         <div className="skillsGrid">
           {skills.map(({ title, icon: Icon, items }, index) => (
             <motion.article
@@ -316,29 +321,53 @@ function App() {
           ))}
         </div>
       </Section>
-      <Section id="education" eyebrow="Formation" title={<>My academic path and <em>certifications</em>.</>} index={6}>
-        <div className="educationLayout">
-          <div className="educationList">
-            {education.map((item) => (
-              <p key={item}>
-                <GraduationCap size={18} />
-                {item}
-              </p>
-            ))}
-          </div>
-          <div className="certPanel">
-            {certifications.map(({ name, date }) => (
-              <p className="certRow" key={name}>
-                <Award size={18} />
-                <span>
-                  <strong>{name}</strong>
-                  <small>{date}</small>
-                </span>
-              </p>
-            ))}
+      <section className="section" id="education">
+        <div className="eduHeader">
+          <div>
+            <p className="eyebrow">Foundations</p>
+            <h2>Education &amp; <em>certifications</em>.</h2>
           </div>
         </div>
-      </Section>
+        <div className="eduGrid">
+          <div>
+            <div className="cmdLabel">
+              <GraduationCap size={15} />
+              EDUCATION
+            </div>
+            <div className="eduList">
+              {education.map(({ degree, school, period }, index) => (
+                <motion.div
+                  className="eduItem"
+                  key={degree}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ delay: index * 0.06 }}
+                >
+                  <p className="eduDegree">{degree}</p>
+                  <p className="eduSchool">{school}</p>
+                  <p className="eduPeriod">{period}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="cmdLabel">
+              <Award size={15} />
+              CERTIFICATIONS
+            </div>
+            <ul className="certList">
+              {certifications.map(({ name, date }) => (
+                <li key={name}>
+                  <span>▸</span>
+                  {name} <em className="certDate">— {date}</em>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
       <Contact />
       <footer className="siteFooter">
         <span>Designed &amp; built by {profile.name}</span>
@@ -477,13 +506,12 @@ function Hero({ fadeUp }) {
 function About({ fadeUp }) {
   return (
     <section className="about" id="about">
-      <div className="sectionHeader">
-        <div className="sectionMeta">
-          <span className="sectionNum">01</span>
-          <p className="eyebrow">About</p>
+<div className="sectionHeader">
+          <div className="sectionMeta">
+            <p className="eyebrow">About</p>
+          </div>
+          <h2>A little <em>about</em> me.</h2>
         </div>
-        <h2>A little <em>about</em> me.</h2>
-      </div>
       <div className="aboutGrid">
         <motion.div
           className="aboutBio"
@@ -493,53 +521,75 @@ function About({ fadeUp }) {
           viewport={{ once: true, margin: '-80px' }}
         >
           <p>
-            I&apos;m a software engineering graduate who enjoys the whole journey of building software, from the first
-            sketch of an interface to the API behind it, and all the way to putting it in front of real users.
+            As a software engineering graduate, I thrive on the full product journey—from initial UI sketches and core
+            API development to real-world deployment. My internship experience spans the full stack: building frontend
+            interfaces with React and Angular, developing robust backends using Spring Boot and NestJS, and managing
+            relational and NoSQL databases like MySQL, PostgreSQL, and MongoDB. I&apos;ve also built cross-platform and
+            native mobile apps using Flutter and Android Studio, and I am comfortable shipping reliable code using
+            Docker, CI/CD pipelines, and Kubernetes.
           </p>
-          <p>
-            I&apos;ve spent my internships going deep on the full stack: React and Angular on the frontend, Spring Boot and
-            NestJS on the backend, and MySQL, PostgreSQL, or MongoDB underneath. I also build mobile apps with Flutter and
-            Android Studio. That balance of UI and data, design and logic, is exactly where I like to work.
-          </p>
-          <p>
-            When it comes to shipping, I&apos;m comfortable on the deployment side too — containerizing with Docker,
-            wiring up CI/CD pipelines, and getting applications running on Kubernetes.
-          </p>
-          <div className="beyondCode">
-            <Sparkles size={18} />
-            <p>{profile.beyondCode}</p>
-          </div>
         </motion.div>
         <motion.div
-          className="factGrid"
+          className="aboutJson"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           transition={{ delay: 0.08 }}
         >
-          {profile.facts.map(({ icon: Icon, label, value }) => (
-            <div className="factCard" key={label}>
-              <div className="factIcon">
-                <Icon size={22} />
-              </div>
-              <span>{label}</span>
-              <strong>{value}</strong>
-              <Icon className="factWatermark" size={110} />
+          <div className="cmdWindow">
+            <div className="cmdTitlebar">
+              <span className="cmdDot cmdDotRed" />
+              <span className="cmdDot" />
+              <span className="cmdDot" />
+              <span className="cmdPath">~/profile.json</span>
             </div>
-          ))}
+            <div className="cmdBody">
+              <p>
+                <span className="cmdKey">"name"</span>: <span className="cmdVal">"{profile.name}"</span>,
+              </p>
+              <p>
+                <span className="cmdKey">"role"</span>: <span className="cmdVal">"{profile.role}"</span>,
+              </p>
+              <p>
+                <span className="cmdKey">"based_in"</span>: <span className="cmdVal">"{profile.location}"</span>,
+              </p>
+              <p>
+                <span className="cmdKey">"languages"</span>: [
+                <span className="cmdVal">{profile.languages.map((language) => `"${language}"`).join(', ')}</span>],
+              </p>
+              <p>
+                <span className="cmdKey">"phone"</span>: <span className="cmdVal">"{profile.phone}"</span>,
+              </p>
+              <p>
+                <span className="cmdKey">"open_to_work"</span>: <span className="cmdVal cmdBool">true</span>
+              </p>
+            </div>
+          </div>
         </motion.div>
       </div>
+      <motion.div
+        className="beyondCode"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+      >
+        <Sparkles size={18} />
+        <div>
+          <p className="beyondLabel">beyond_code</p>
+          <p>{profile.beyondCode}</p>
+        </div>
+      </motion.div>
     </section>
   );
 }
 
-function Section({ id, eyebrow, title, children, index }) {
+function Section({ id, eyebrow, title, children }) {
   return (
     <section className="section" id={id}>
       <div className="sectionHeader">
         <div className="sectionMeta">
-          {index != null && <span className="sectionNum">{String(index).padStart(2, '0')}</span>}
           <p className="eyebrow">{eyebrow}</p>
         </div>
         {title ? <h2>{title}</h2> : null}
@@ -578,6 +628,12 @@ function ProjectCard({ project, index, wide, fadeUp }) {
       onMouseLeave={handleLeave}
       onViewportLeave={() => videoRef.current?.pause()}
     >
+      <div className="cmdTitlebar">
+        <span className="cmdDot cmdDotRed" />
+        <span className="cmdDot" />
+        <span className="cmdDot" />
+        <span className="cmdPath">~/projects/{project.title.toLowerCase().replace(/\s+/g, '-')}</span>
+      </div>
       <div className="projectMedia">
         {hasMedia ? (
           isVideo ? (
@@ -604,34 +660,45 @@ function ProjectCard({ project, index, wide, fadeUp }) {
         ) : (
           <div className="mediaPlaceholder">
             <span>{project.title}</span>
-            <small>Add a screenshot, video, or GIF</small>
+            <small>preview_unavailable.png</small>
           </div>
         )}
       </div>
       <div className="projectContent">
-        <p>{project.type}</p>
-        <h3>{project.title}</h3>
-        <span>{project.description}</span>
+        <h3 className="projectTitle">{project.title}</h3>
+        <p className="projectSubtitle">{project.type}</p>
+        <p className="projectDesc">{project.description}</p>
         <div className="stackList">
           {project.stack.map((tech) => (
             <small key={tech}>{tech}</small>
           ))}
         </div>
-        {project.nda ? (
-          <div className="ndaNote">
-            <Lock size={14} />
-            <span>Source code &amp; demo under NDA</span>
-          </div>
-        ) : (
-          <div className="projectActions">
-            <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub repository`}>
-              <Github size={18} />
-            </a>
-            <a href={project.live} target="_blank" rel="noreferrer" aria-label={`${project.title} live project`}>
-              <ArrowUpRight size={18} />
-            </a>
-          </div>
-        )}
+        <div className="projectFooter">
+          {project.nda ? (
+            <div className="ndaNote">
+              <Lock size={14} />
+              <span>Source code &amp; demo under NDA</span>
+            </div>
+          ) : (
+            <>
+              <a className="btnGhost" href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub repository`}>
+                <Github size={15} />
+                Code
+              </a>
+              {project.live && project.live.trim() && project.live.trim() !== '#' ? (
+                <a className="btnSolid" href={project.live} target="_blank" rel="noreferrer" aria-label={`${project.title} live project`}>
+                  <ExternalLink size={15} />
+                  Live
+                </a>
+              ) : (
+                <span className="btnPrivate">
+                  <ExternalLink size={15} />
+                  Private
+                </span>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </motion.article>
   );
@@ -640,27 +707,31 @@ function ProjectCard({ project, index, wide, fadeUp }) {
 function Contact() {
   return (
     <section className="contact" id="contact">
-      <div>
+      <div className="contactGlow" aria-hidden="true" />
+      <div className="contactInner">
         <p className="eyebrow">Contact</p>
-        <h2>Have an idea, a project, or just want to say <em>hi</em>? Let&apos;s talk.</h2>
-      </div>
-      <div className="contactActions">
-        <a href={`mailto:${profile.email}`}>
-          <Mail size={18} />
-          Email
+        <h2>Have an idea, a project, or just want to say <em>hi</em> ? Let&apos;s talk.</h2>
+        <p className="contactSub">
+          Open to full-stack, mobile, and software engineering roles. Email is the fastest way to reach me.
+        </p>
+        <a className="contactEmail" href={`mailto:${profile.email}`}>
+          {profile.email}
+          <ArrowUpRight size={16} />
         </a>
-        <a href={profile.linkedin} target="_blank" rel="noreferrer">
-          <Linkedin size={18} />
-          LinkedIn
-        </a>
-        <a href={profile.github} target="_blank" rel="noreferrer">
-          <Github size={18} />
-          GitHub
-        </a>
-        <a href="/Nadine_Mlayah_CV_EN.pdf" target="_blank" rel="noreferrer">
-          <FileDown size={18} />
-          Resume
-        </a>
+        <div className="contactSocial">
+          <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <Linkedin size={20} />
+          </a>
+          <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+            <Github size={20} />
+          </a>
+          <a href={`mailto:${profile.email}`} aria-label="Email">
+            <Mail size={20} />
+          </a>
+          <a className="resumeLink" href="/Nadine_Mlayah_CV_EN.pdf" target="_blank" rel="noreferrer">
+            resume
+          </a>
+        </div>
       </div>
     </section>
   );
