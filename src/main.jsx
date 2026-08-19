@@ -177,6 +177,26 @@ const projects = [
     github: 'https://github.com/NadineMlayeh/job-applications-tracker',
     live: 'https://job-applications-tracker-azure.vercel.app/',
   },
+  {
+    title: 'Little Journeys',
+    type: 'Personal · Family & Milestone App',
+    description:
+      'A warm, full-stack digital keepsake app designed for families to track baby milestones, growth steps, and precious memories. Features family authentication, interactive child timelines from birth to early childhood, custom milestone logging, and photo history display.',
+    stack: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Supabase'],
+    // Screenshots: drop captures in public/projects/family-journey-tracker/ named 1.png, 2.png, 3.png, ...
+    // The card auto-scrolls through them and pauses on hover.
+    screens: [
+      '/projects/little-journeys/l1.png',
+      '/projects/little-journeys/l2.png',
+      '/projects/little-journeys/l3.png',
+      '/projects/little-journeys/l4.png',
+      '/projects/little-journeys/l5.png',
+      '/projects/little-journeys/l6.png',
+      '/projects/little-journeys/l7.png',
+    ],
+    github: 'https://github.com/NadineMlayeh/family-journey-tracker',
+    live: 'https://family-journey-tracker.vercel.app/',
+  },
 ];
 
 const awards = {
