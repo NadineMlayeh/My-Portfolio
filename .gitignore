@@ -5,5 +5,9 @@ build/
 .env.*
 !.env.example
 
-# Large project videos
+# Project demo videos are kept out of the repository by default: they are large, they change
+# often, and git keeps every version of them forever. The LIFE demo is the exception — it is
+# compressed to a few megabytes and served straight from the site, so it is committed on
+# purpose. The negation has to come after the pattern it undoes.
 public/projects/*.mp4
+!public/projects/life.mp4
