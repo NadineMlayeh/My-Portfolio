@@ -3,16 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Nadine Mlayah — Full Stack Engineer | Java, Spring, React, Next.js</title>
     <meta
       name="description"
-      content="Nadine Mlayeh — Full Stack Engineer. Software engineering graduate building complete products with React, Angular, Spring Boot, and NestJS."
+      content="Nadine Mlayah, software engineering graduate from ISIMM, Tunisia. Full stack engineer working with React, Next.js, Angular, Spring Boot and NestJS, building LLM-powered features with the Gemini API. Open to relocation and remote work."
     />
-    <meta property="og:title" content="Nadine Mlayeh | Full Stack Engineer" />
+    <meta
+      name="keywords"
+      content="Nadine Mlayah, full stack engineer, software engineer Tunisia, React, Next.js, Angular, Spring Boot, NestJS, TypeScript, PostgreSQL, Docker, Kubernetes, Gemini API, Three.js"
+    />
+    <meta name="author" content="Nadine Mlayah" />
+    <link rel="canonical" href="https://nadine-mlayah.vercel.app/" />
+
+    <!-- What LinkedIn, Slack and every application form read when the link is pasted. -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://nadine-mlayah.vercel.app/" />
+    <meta property="og:site_name" content="Nadine Mlayah" />
+    <meta property="og:title" content="Nadine Mlayah — Full Stack Engineer" />
     <meta
       property="og:description"
-      content="Full Stack Engineer building complete products — interfaces, APIs, and everything in between."
+      content="Full stack engineer building complete products — interfaces, APIs and everything in between. React, Next.js, Spring Boot, NestJS, and LLM-powered features."
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://nadine-mlayah.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nadine Mlayah — Full Stack Engineer" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nadine Mlayah — Full Stack Engineer" />
+    <meta
+      name="twitter:description"
+      content="Full stack engineer building complete products — interfaces, APIs and everything in between."
+    />
+    <meta name="twitter:image" content="https://nadine-mlayah.vercel.app/og.png" />
+
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23050505'/%3E%3Ctext x='50' y='68' font-size='52' font-family='Arial' font-weight='800' fill='%23e50914' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E"
@@ -23,10 +48,58 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Nadine Mlayeh | Full Stack Engineer</title>
+
+    <!--
+      Structured data. Search engines read this even though the page itself is rendered by
+      JavaScript, so the essential facts — who this is, what they do, where else they are — are
+      available without executing anything.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Nadine Mlayah",
+        "jobTitle": "Full Stack Engineer",
+        "url": "https://nadine-mlayah.vercel.app/",
+        "email": "mailto:nadine.mlayah@gmail.com",
+        "address": { "@type": "PostalAddress", "addressCountry": "TN" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "ISIMM — Institut Supérieur d'Informatique et de Mathématiques de Monastir"
+        },
+        "sameAs": [
+          "https://github.com/NadineMlayeh",
+          "https://linkedin.com/in/nadine-mlayah"
+        ],
+        "knowsAbout": [
+          "React", "Next.js", "TypeScript", "Angular", "Spring Boot", "NestJS",
+          "PostgreSQL", "Docker", "Kubernetes", "Three.js", "Gemini API"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!--
+        A plain-text summary for crawlers and link previews that do not execute JavaScript.
+        React replaces the whole of #root on mount, so this is never seen by a real visitor —
+        it exists so that a request with scripting disabled still returns something meaningful.
+      -->
+      <noscript>
+        <h1>Nadine Mlayah — Full Stack Engineer</h1>
+        <p>
+          Software engineering graduate from ISIMM, Tunisia. Full stack engineer working with
+          React, Next.js, Angular, Spring Boot and NestJS, building LLM-powered features with
+          the Gemini API, and shipping with Docker and CI/CD.
+        </p>
+        <p>Selected projects: LIFE, Job Tracker, Portal, InnovaLearn, HackerCry Zone, Home Appliances, Little Journeys.</p>
+        <p>
+          <a href="https://github.com/NadineMlayeh">GitHub</a> ·
+          <a href="https://linkedin.com/in/nadine-mlayah">LinkedIn</a> ·
+          <a href="mailto:nadine.mlayah@gmail.com">nadine.mlayah@gmail.com</a>
+        </p>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

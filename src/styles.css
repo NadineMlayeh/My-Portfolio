@@ -248,18 +248,30 @@ h3 {
   overflow: hidden;
 }
 
+/* A rotated label in the left margin. It sits behind the content on purpose: rotated text with
+   `nowrap` grows along the page's height, so anything long enough will cross the headline. Kept
+   short, kept faint, and kept out of the stacking order the text occupies. */
 .heroSide {
   position: absolute;
   top: 50%;
-  left: 16px;
-  z-index: 1;
+  left: 4px;
+  z-index: 0;
   color: var(--muted-dark);
+  opacity: 0.5;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.32em;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   white-space: nowrap;
+  pointer-events: none;
   transform: translateY(-50%) rotate(-90deg);
+}
+
+/* Hidden wherever the hero is not wide enough to spare a margin for it. */
+@media (max-width: 1180px) {
+  .heroSide {
+    display: none;
+  }
 }
 
 .signal {
@@ -1733,5 +1745,30 @@ p {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Secondary skills: coursework and academic exposure, deliberately quieter than the main grid
+   so the technologies used to ship real work read first. */
+.skillsAside {
+  margin-top: 20px;
+  padding: 20px 22px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.skillsAside .skillTitle h3 {
+  font-size: 0.95rem;
+}
+
+.chip.chipMuted {
+  opacity: 0.62;
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .skillsAside {
+    padding: 16px 16px;
   }
 }

@@ -29,9 +29,11 @@ import {
 import './styles.css';
 
 const profile = {
-  name: 'Nadine Mlayeh',
-  role: 'Full Stack Engineer',
-  location: 'Jammel, Tunisia',
+  name: 'Nadine Mlayah',
+  role: 'Full Stack Engineer · Java/Spring · React/Next.js',
+  roleShort: 'Full Stack Engineer',
+  location: 'Tunisia',
+  openTo: ['relocation', 'remote'],
   phone: '+216 96 424 436',
   email: 'nadine.mlayah@gmail.com',
   github: 'https://github.com/NadineMlayeh',
@@ -41,7 +43,7 @@ const profile = {
   photo: '/me.jpg',
   tagline: 'I build complete products, web and mobile, from interface to API to deployment.',
   summary:
-    'Software engineering graduate from ISIMM, working across the full stack with React, Angular, Spring Boot, and NestJS — and building mobile apps with Flutter and Android Studio. I know my way around shipping too: Docker, Kubernetes, and CI/CD pipelines.',
+    'Software engineering graduate from ISIMM, working across the full stack with React, Next.js, Angular, Spring Boot and NestJS. I build LLM-powered features with the Gemini API, and I am comfortable shipping with Docker and CI/CD.',
   facts: [
     { icon: GraduationCap, label: 'Degree', value: 'Software Engineering, ISIMM' },
   ],
@@ -58,8 +60,8 @@ const ticker = [
   'Angular',
   'Spring Boot',
   'NestJS',
-  'Flutter',
-  'Android',
+  'Tailwind CSS',
+  'Three.js',
   'MySQL',
   'PostgreSQL',
   'Supabase',
@@ -73,12 +75,18 @@ const ticker = [
 const skills = [
   { title: 'Frontend', icon: Code2, items: ['React', 'Next.js', 'TypeScript', 'Angular', 'HTML', 'Tailwind CSS', 'React Query', 'Framer Motion'] },
   { title: 'Backend', icon: ServerCog, items: ['Spring Boot', 'NestJS', 'REST API', 'Java'] },
-  { title: 'Mobile', icon: Smartphone, items: ['Flutter', 'Dart', 'Android Studio', 'Java'] },
   { title: 'Data', icon: Database, items: ['MySQL', 'PostgreSQL', 'Supabase', 'MongoDB'] },
   { title: 'AI & LLM', icon: Sparkles, items: ['Gemini API', 'AI Feature Design', 'Prompt Engineering', 'Structured JSON Output'] },
-  { title: 'Languages & Tools', icon: Terminal, items: ['Python', 'C/C++', 'Git/GitHub'] },
+  { title: 'Tools', icon: Terminal, items: ['Git/GitHub', 'Prisma', 'Figma', 'Postman'] },
   { title: 'Deployment & Cloud', icon: Cloud, items: ['Docker', 'Kubernetes', 'GitLab CI/CD', 'AWS', 'Vercel'] },
 ];
+
+// Kept separate from the main grid on purpose: academic and coursework exposure rather than
+// technologies used to ship production work.
+const alsoWorkedWith = {
+  title: 'Also worked with',
+  items: ['Flutter', 'Dart', 'Android Studio', 'Python', 'C/C++'],
+};
 
 const experiences = [
   {
@@ -89,7 +97,7 @@ const experiences = [
     points: [
       'Designed and developed a full-stack, microservices platform (Angular frontend, Spring Boot APIs, MySQL) covering after-sales service, product, and user management.',
       'Built features end-to-end: from UI screens and REST endpoints to data models, with async communication wired through RabbitMQ and auth via Keycloak.',
-      'Shipped it with an automated CI/CD pipeline and GitOps deployment (GitLab CI, ArgoCD, Kubernetes), with MinIO for object storage.',
+      "Containerised and configured my services for the team's GitLab CI → ArgoCD GitOps pipeline on Kubernetes, working alongside the DevOps engineer who owned it. Integrated MinIO for object storage.",
     ],
   },
   {
@@ -109,56 +117,25 @@ const experiences = [
     title: 'Full Stack Developer Intern',
     project: 'Inventory & sales management platform',
     points: [
-      'Developed a home-appliance sales web app with React.js on the frontend and Spring Boot on the backend.',
-      'Implemented customer management, transaction tracking, and a secure payment flow.',
-      'Modeled and administered the MySQL database powering inventory and sales.',
+      'Built a home-appliance sales and stock platform on Spring Boot with server-rendered Thymeleaf views.',
+      'Implemented role-based access with Spring Security, product and stock management, customer records, and invoicing.',
+      'Modelled the PostgreSQL schema behind inventory and sales, and deployed the app with Docker.',
     ],
   },
 ];
 
 const projects = [
   {
-    title: 'Portal',
-    type: 'Capstone · Enterprise platform',
+    title: 'LIFE',
+    type: 'Personal · 3D web application',
     description:
-      'After-sales service and product management platform built as a microservices architecture, with SSO, async messaging, object storage, and automated Kubernetes delivery.',
-    stack: ['Spring Boot', 'Angular', 'MySQL', 'RabbitMQ', 'Keycloak', 'Kubernetes'],
-    // Media: drop a screenshot / video in public/projects/ and point to it, e.g. media: '/projects/theportal.png'
-    media: '/projects/portal.png',
-    // Source code and demo can't be shared due to the NDA I signed after delivering the work.
-    nda: true,
-    github: '',
-    live: '',
-  },
-  {
-    title: 'InnovaLearn',
-    type: 'Internship · Educational platform',
-    description:
-      'Interactive learning platform where children take online courses, instructors publish lessons and exercises, and admins track real-time usage.',
-    stack: ['React', 'NestJS', 'PostgreSQL'],
-    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999042/innova_sped_1.mp4',
-    github: 'https://github.com/NadineMlayeh/Learning-plateform',
-    live: 'https://learning-plateform-nu.vercel.app',
-  },
-  {
-    title: 'Home Appliances',
-    type: 'Internship · Business app',
-    description:
-      'Home-appliance sales web app with inventory control, customer management, transaction tracking, and secure payment integration.',
-    stack: ['React', 'Spring Boot', 'MySQL'],
-    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786998795/electrohamza.mp4',
-    github: 'https://github.com/NadineMlayeh/Home-Appliances-Management-Website',
-    live: 'https://home-appliances-management-website.onrender.com ',
-  },
-  {
-    title: 'HackerCry Zone',
-    type: 'Competition · Cybersecurity education',
-    description:
-      'A website that teaches people, in an interactive way, how to prevent getting hacked, built for the Nuit de l’Info competition under its requested theme.',
-    stack: ['JavaScript', 'HTML/CSS', 'UX Design'],
-    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999785/hacker_1.mp4',
-    github: 'https://github.com/NadineMlayeh/Hacker-website',
-    live: 'https://hackers-cry-zone.web.app/',
+      'A life you can walk into. LIFE is a 3D Victorian study you explore in the browser: click the bookshelf and write, open the longcase clock for a timeline that shows the real time elapsed between moments, take down the mirror for who you are, pin countries to the wall map, leaf through a photo album, and step through the window into the garden where a post box carries letters to other people. The room lights itself from your own clock, so evening looks like evening. Every surface is drawn in code — no 3D models, no image assets — and privacy is enforced in the database, so anything unshared never reaches a browser at all.',
+    stack: ['React', 'Three.js', 'React Three Fiber', 'NestJS', 'Prisma', 'PostgreSQL', 'TypeScript'],
+    // Committed to the repo rather than a CDN: 8.6 MB after re-encoding, small enough to serve
+    // from the site itself. Other project videos stay out of git; this one is the exception.
+    media: '/projects/life.mp4',
+    github: 'https://github.com/NadineMlayeh/LIFE',
+    live: 'https://life-app-sage.vercel.app',
   },
   {
     title: 'Job Tracker',
@@ -176,6 +153,49 @@ const projects = [
     ],
     github: 'https://github.com/NadineMlayeh/job-applications-tracker',
     live: 'https://job-applications-tracker-azure.vercel.app/',
+  },
+  {
+    title: 'Portal',
+    type: 'Capstone · Enterprise platform',
+    description:
+      "After-sales service and product management platform built as a microservices architecture, with SSO, async messaging and object storage. Deployed to Kubernetes through the team's GitOps pipeline.",
+    stack: ['Spring Boot', 'Angular', 'MySQL', 'RabbitMQ', 'Keycloak', 'Kubernetes'],
+    // Media: drop a screenshot / video in public/projects/ and point to it, e.g. media: '/projects/theportal.png'
+    media: '/projects/portal.png',
+    // Source code and demo can't be shared due to the NDA I signed after delivering the work.
+    nda: true,
+    github: '',
+    live: '',
+  },
+  {
+    title: 'InnovaLearn',
+    type: 'Internship · Educational platform',
+    description:
+      'Learning platform for teaching children robotics, soft skills and development. Students enrol in courses, work through video and PDF lessons, answer QCM exercises to unlock the next level of a roadmap, and earn badges and generated PDF certificates. Instructors publish and manage their own courses; admins validate payments and watch progress. Multi-language throughout.',
+    stack: ['React', 'NestJS', 'Prisma', 'PostgreSQL', 'JWT', 'i18next'],
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999042/innova_sped_1.mp4',
+    github: 'https://github.com/NadineMlayeh/Learning-plateform',
+    live: 'https://learning-plateform-nu.vercel.app',
+  },
+  {
+    title: 'HackerCry Zone',
+    type: 'Competition · Cybersecurity education',
+    description:
+      'A website that teaches people, in an interactive way, how to prevent getting hacked, built for the Nuit de l’Info competition under its requested theme.',
+    stack: ['JavaScript', 'HTML/CSS', 'UX Design'],
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786999785/hacker_1.mp4',
+    github: 'https://github.com/NadineMlayeh/Hacker-website',
+    live: 'https://hackers-cry-zone.web.app/',
+  },
+  {
+    title: 'Home Appliances',
+    type: 'Internship · Business app',
+    description:
+      'Home-appliance store with two faces: an admin side for stock, products and invoicing, and a client side for browsing and feedback. Server-rendered with Thymeleaf, secured with Spring Security, and containerised for deployment.',
+    stack: ['Spring Boot', 'Thymeleaf', 'PostgreSQL', 'Spring Security', 'Docker'],
+    media: 'https://res.cloudinary.com/ogbxb9wp/video/upload/v1786998795/electrohamza.mp4',
+    github: 'https://github.com/NadineMlayeh/Home-Appliances-Management-Website',
+    live: 'https://home-appliances-management-website.onrender.com',
   },
   {
     title: 'Little Journeys',
@@ -197,13 +217,25 @@ const projects = [
     github: 'https://github.com/NadineMlayeh/family-journey-tracker',
     live: 'https://family-journey-tracker.vercel.app/',
   },
+  // TODO: fill this in before shipping. It is commented out deliberately so a half-written
+  // card cannot reach the live site — uncomment once the title, description and links are real.
+  // {
+  //   title: '[RAG PROJECT NAME]',
+  //   type: 'Personal · AI engineering',
+  //   description:
+  //     'Retrieval-augmented question answering over [corpus]. Chunking, embeddings, vector search in Postgres/pgvector, and grounded answers that cite their source passage. Evaluated against a test question set.',
+  //   stack: ['Next.js', 'TypeScript', 'Supabase', 'pgvector', 'Gemini API'],
+  //   media: '',
+  //   github: '',
+  //   live: '',
+  // },
 ];
 
 const awards = {
-  title: 'Nuit de l’Info · 2024 & 2025',
-  tag: 'Competition · Back-to-back editions',
+  title: '2nd place — most creative animated website',
+  tag: 'Nuit de l’Info · 2025',
   summary:
-    'Competed in two consecutive editions of the annual 24-hour coding night. In 2025, my team won second place in the “most creative animated website” défi with Shake That Site, built around that year’s theme.',
+    'Shake That Site took second place in the “most creative animated website” défi at Nuit de l’Info 2025, built inside the 24 hours of the competition around that year’s theme. My team entered two consecutive editions, in 2024 and 2025.',
 };
 
 const certifications = [
@@ -365,6 +397,25 @@ function App() {
             </motion.article>
           ))}
         </div>
+        <motion.div
+          className="skillsAside"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
+          <div className="skillTitle">
+            <Smartphone size={18} />
+            <h3>{alsoWorkedWith.title}</h3>
+          </div>
+          <div className="chips">
+            {alsoWorkedWith.items.map((item) => (
+              <span className="chip chipMuted" key={item}>
+                {item}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </Section>
       <section className="section" id="education">
         <div className="eduHeader">
@@ -482,7 +533,7 @@ function Hero({ fadeUp }) {
         <div className="redline redlineTwo" />
       </motion.div>
       <div className="heroSide" aria-hidden="true">
-        {profile.role}
+        {profile.roleShort}
       </div>
       <div className="heroLayout">
         <motion.div className="heroText" variants={fadeUp} initial="hidden" animate="visible">
@@ -514,7 +565,7 @@ function Hero({ fadeUp }) {
             <a className="primaryAction" href="#projects">
               View my work <ArrowUpRight size={18} />
             </a>
-            <a className="secondaryAction" href="/Nadine_Mlayah_CV_EN.pdf" target="_blank" rel="noreferrer">
+            <a className="secondaryAction" href="/Nadine_Mlayah_Software_Engineer_CV.pdf" target="_blank" rel="noreferrer">
               Resume <FileDown size={18} />
             </a>
             <a className="secondaryAction" href="#contact">
@@ -840,7 +891,8 @@ function Contact() {
         <p className="eyebrow">Contact</p>
         <h2>Have an idea, a project, or just want to say <em>hi</em> ? Let&apos;s talk.</h2>
         <p className="contactSub">
-          Open to full-stack, mobile, and software engineering roles. Email is the fastest way to reach me.
+          Open to full-stack and software engineering roles, in Tunisia or remote, and open to
+          relocation. Email is the fastest way to reach me.
         </p>
         <a className="contactEmail" href={`mailto:${profile.email}`}>
           {profile.email}
@@ -856,7 +908,7 @@ function Contact() {
           <a href={`mailto:${profile.email}`} aria-label="Email">
             <Mail size={20} />
           </a>
-          <a className="resumeLink" href="/Nadine_Mlayah_CV_EN.pdf" target="_blank" rel="noreferrer">
+          <a className="resumeLink" href="/Nadine_Mlayah_Software_Engineer_CV.pdf" target="_blank" rel="noreferrer">
             resume
           </a>
         </div>
