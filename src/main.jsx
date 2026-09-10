@@ -137,6 +137,19 @@ const projects = [
     github: 'https://github.com/NadineMlayeh/LIFE',
     live: 'https://life-app-sage.vercel.app',
   },
+    {
+    title: 'Hakki (حقّي)',
+    type: 'AI . RAG Application',
+    description:
+      'Hakki (حقّي) is a RAG application built around the Tunisian Code du Travail. Users can ask questions in natural-language French and receive answers grounded in relevant legal articles, with article citations attached to the generated response. Version 1 focuses on the retrieval side of RAG: comparing article-boundary and fixed-size chunking, dense vector search, BM25, and hybrid retrieval using Reciprocal Rank Fusion. Retrieval quality is evaluated using hand-written ground truth with Hit@K, Recall@K and MRR, allowing each configuration to be measured independently from LLM generation.',
+    stack: ['Python', 'PyMuPDF', 'Sentence Transformers', 'NumPy', 'BM25', 'Gemini API', 'Streamlit'],
+    // Committed to the repo rather than a CDN: 8.6 MB after re-encoding, small enough to serve
+    // from the site itself. Other project videos stay out of git; this one is the exception.
+    media: '/projects/hakki.mp4',
+    github: 'https://github.com/NadineMlayeh/RAG-Hakki',
+    live: 'https://rag-hakki.streamlit.app/',
+  },
+
   {
     title: 'Job Tracker',
     type: 'Personal · AI productivity app',
