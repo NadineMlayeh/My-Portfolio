@@ -1,0 +1,32 @@
+:root { --lamp-power: 0; --lamp-x: 77vw; --lamp-y: 45vh; }
+.ambientRedLight { position: fixed; inset: 0; z-index: 4; pointer-events: none; opacity: var(--lamp-power); background: radial-gradient(ellipse at var(--lamp-x) var(--lamp-y), rgba(255, 35, 65, .2), rgba(239, 24, 52, .08) 44%, rgba(200, 20, 45, .025) 100%); mix-blend-mode: screen; transition: opacity 100ms linear; }
+.portraitFrame { box-shadow: 0 0 0 9px #f0445208, 0 0 0 1px #f0445240, 0 0 calc(18px + var(--lamp-power) * 65px) rgba(255, 42, 65, calc(var(--lamp-power) * .8)), 0 0 calc(40px + var(--lamp-power) * 130px) rgba(255, 24, 58, calc(var(--lamp-power) * .44)); border-color: rgba(255, 80, 104, calc(.3 + var(--lamp-power) * .65)); transition: box-shadow 100ms linear, border-color 100ms linear; }
+.portraitFrame::after { box-shadow: inset 0 -26px 44px rgba(0, 0, 0, .38), inset 0 0 calc(var(--lamp-power) * 30px) rgba(255, 35, 60, calc(var(--lamp-power) * .22)); }
+.lampControl { position: relative; flex-shrink: 0; width: 44px; height: 44px; margin-left: 13px; color: #9b7b80; z-index: 6; --cord-extension: 0px; }
+.lampSwitch { display: grid; place-items: center; width: 44px; height: 44px; padding: 3px; border: 0; border-radius: 12px; background: transparent; color: inherit; cursor: pointer; }
+.lampSwitch svg { width: 36px; height: 36px; overflow: visible; }
+.lampShade { fill: #22171c; transition: fill .15s; }
+.lampRim { stroke: #965560; }
+.lampBulb { stroke: #97606a; }
+.lampRays { stroke: #fb556d; opacity: calc(var(--lamp-power) * .9); }
+.lampOn { color: #f28496; }
+.lampOn .lampShade { fill: #3e1b26; }
+.lampOn .lampBulb, .lampOn .lampRim { stroke: #ff7b90; filter: drop-shadow(0 0 3px #ff345c); }
+.lampSwitch:hover { background: #f0445208; }
+.lampCord { position: absolute; width: 1px; height: calc(23px + var(--cord-extension)); top: 36px; left: calc(50% - .5px); background: linear-gradient(#84515b, #dd98a6); pointer-events: none; transition: height .28s cubic-bezier(.2,.8,.2,1); }
+.lampPull { position: absolute; top: calc(39px + var(--cord-extension)); left: 0; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: ns-resize; touch-action: none !important; user-select: none; -webkit-user-select: none; transition: top .28s cubic-bezier(.2,.8,.2,1); }
+.lampPull > span { display: block; width: 10px; height: 15px; border: 1px solid #c17b8b; border-radius: 5px; background: linear-gradient(#4d2532, #28171e); box-shadow: 0 0 calc(var(--lamp-power) * 12px) rgba(255, 50, 80, calc(var(--lamp-power) * .8)); }
+.lampPull:hover > span, .lampPull:focus-visible > span { border-color: #ffc3cc; background: #783148; }
+.lampPull:focus-visible { outline: none; }
+.lampHint { position: absolute; top: calc(66px + var(--cord-extension)); right: 35px; color: #b18792; font: 9px var(--font-mono); white-space: nowrap; pointer-events: none; transition: top .28s cubic-bezier(.2,.8,.2,1); }
+.lampDragging .lampCord, .lampDragging .lampPull, .lampDragging .lampHint { transition: none; }
+@media (max-width: 767px) {
+  .appHeaderActions { display: flex; align-items: center; gap: 6px; }
+  .appHeaderActions .lampControl { margin-left: 0; width: 40px; }
+  .appHeaderActions .lampSwitch, .appHeaderActions .lampPull { width: 40px; }
+  .appHeroPhoto, .appStoryPortrait { box-shadow: 0 0 0 6px #f0445208, 0 0 calc(12px + var(--lamp-power) * 40px) rgba(255, 42, 65, calc(var(--lamp-power) * .8)), 0 0 calc(25px + var(--lamp-power) * 90px) rgba(255, 24, 58, calc(var(--lamp-power) * .4)); transition: box-shadow 100ms linear; }
+  .appHeaderActions .lampHint { right: 31px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambientRedLight, .portraitFrame, .appHeroPhoto, .appStoryPortrait, .lampCord, .lampPull, .lampHint { transition: none; }
+}

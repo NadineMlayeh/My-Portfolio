@@ -484,26 +484,30 @@ h1 {
   display: flex;
   width: max-content;
   gap: 0;
-  animation: tickerScroll 30s linear infinite;
+  animation: tickerScroll 54s linear infinite;
 }
 
-.tickerTrack span {
+.tickerGroup {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  padding-right: 38px;
+}
+
+.tickerTrack .tickerSkill {
   display: inline-flex;
   align-items: center;
-  gap: 26px;
-  padding-right: 26px;
+  gap: 10px;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
-.tickerTrack i {
-  color: var(--red);
-  font-style: normal;
-}
+.tickerIcon { width: 23px; height: 23px; flex-shrink: 0; object-fit: contain; }
+.tickerIconLight { filter: invert(1); }
+.tickerPipeline { color: #f08798; flex-shrink: 0; }
 
 .section,
 .about,

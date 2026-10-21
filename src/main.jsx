@@ -28,6 +28,8 @@ import {
 } from 'lucide-react';
 import './styles.css';
 import MobilePortfolio from './mobile.jsx';
+import { LightingProvider, LampControl } from './lighting.jsx';
+import SkillTicker from './skill-ticker.jsx';
 
 const profile = {
   name: 'Nadine Mlayah',
@@ -548,6 +550,7 @@ function Header({ activeSection, menuOpen, setMenuOpen }) {
           </a>
         ))}
       </nav>
+      <LampControl />
       <button className="iconButton menuButton" type="button" onClick={() => setMenuOpen((value) => !value)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation">
         {menuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
@@ -645,16 +648,7 @@ function Hero({ fadeUp }) {
         </motion.figure>
       </div>
       <a className="heroExplore" href="#projects"><span>Explore the projects</span><span aria-hidden="true">↓</span></a>
-      <div className="ticker" aria-hidden="true">
-        <div className="tickerTrack">
-          {[...ticker, ...ticker].map((tech, index) => (
-            <span key={`${tech}-${index}`}>
-              {tech}
-              <i>✦</i>
-            </span>
-          ))}
-        </div>
-      </div>
+      <SkillTicker items={ticker} />
     </section>
   );
 }
@@ -1047,4 +1041,4 @@ function BackToTop() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById('root')).render(<LightingProvider><App /></LightingProvider>);

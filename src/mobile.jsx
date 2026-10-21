@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, ChevronRight, Code2, Copy, FileDown, Github, GraduationCap, Home, LayoutGrid, Linkedin, Lock, Mail, Medal, Sparkles, UserRound, X } from 'lucide-react';
 import './mobile.css';
+import { LampControl } from './lighting.jsx';
 
 const destinations = [
   { id: 'home', hash: 'top', label: 'Home', icon: Home },
@@ -68,7 +69,7 @@ export default function MobilePortfolio(data) {
   return <div className="mobileApp">
     <header className="appHeader">
       <a href="#top" className="appBrand" aria-label="Nadine Mlayah home"><span className="appAvatar"><Portrait /></span><span>Nadine<span className="appBrandSub">Portfolio / software engineer</span></span></a>
-      <a className="appHeaderAction" href={`mailto:${profile.email}`} aria-label="Email Nadine"><Mail size={19} /></a>
+      <div className="appHeaderActions"><LampControl /><a className="appHeaderAction" href={`mailto:${profile.email}`} aria-label="Email Nadine"><Mail size={19} /></a></div>
     </header>
 
     <main ref={screenRef} className="appScreen" tabIndex={-1} aria-label={`${destinations.find((item) => item.id === view).label} view`}>
