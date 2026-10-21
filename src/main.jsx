@@ -1,6 +1,6 @@
     import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform, useInView } from 'framer-motion';
 import {
   ArrowUpRight,
   Award,
@@ -27,6 +27,7 @@ import {
   X,
 } from 'lucide-react';
 import './styles.css';
+import MobilePortfolio from './mobile.jsx';
 
 const profile = {
   name: 'Nadine Mlayah',
@@ -40,7 +41,7 @@ const profile = {
   linkedin: 'https://linkedin.com/in/nadine-mlayah',
   languages: ['Arabic', 'French', 'English'],
   // Photo: drop your picture in public/ (e.g. public/me.jpg) and point to it here.
-  photo: '/me.jpg',
+  photo: '/optimized/portrait.webp',
   tagline: 'I build complete products, web and mobile, from interface to API to deployment.',
   summary:
     'Software engineering graduate from ISIMM, working across the full stack with React, Next.js, Angular, Spring Boot and NestJS. I build LLM-powered features with the Gemini API, and I am comfortable shipping with Docker and CI/CD.',
@@ -263,10 +264,22 @@ const education = [
   { degree: 'Baccalaureate in Computer Science — High Distinction', school: 'Lycée Jammel', period: '2020 – 2021' },
 ];
 
-function useScrollSpy(ids) {
+function useMobileLayout() {
+  const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 767px)');
+    const update = () => setMobile(query.matches);
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+  return mobile;
+}
+
+function useScrollSpy(ids, enabled = true) {
   const [active, setActive] = useState(ids[0]);
 
   useEffect(() => {
+    if (!enabled) return;
     const observers = ids.map((id) => {
       const element = document.getElementById(id.toLowerCase());
       if (!element) return null;
@@ -275,7 +288,7 @@ function useScrollSpy(ids) {
         ([entry]) => {
           if (entry.isIntersecting) setActive(id);
         },
-        { rootMargin: '-36% 0px -58% 0px', threshold: 0.01 },
+        { rootMargin: '-20% 0px -55% 0px', threshold: 0 },
       );
 
       observer.observe(element);
@@ -283,15 +296,20 @@ function useScrollSpy(ids) {
     });
 
     return () => observers.forEach((observer) => observer?.disconnect());
-  }, [ids]);
+  }, [ids, enabled]);
 
   return active;
 }
 
 function App() {
+  const isMobile = useMobileLayout();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [projectFilter, setProjectFilter] = useState('All');
+  const filteredProjects = projects.filter((project) => projectFilter === 'All' ||
+    (projectFilter === 'AI' ? project.stack.some((tech) => /Gemini|BM25/.test(tech)) :
+      projectFilter === 'Personal' ? /Personal|3D|RAG/.test(project.type) : /Internship|Capstone|Competition/.test(project.type)));
   const shouldReduceMotion = useReducedMotion();
-  const activeSection = useScrollSpy(navItems);
+  const activeSection = useScrollSpy(navItems, !isMobile);
   const fadeUp = useMemo(
     () => ({
       hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
@@ -300,8 +318,11 @@ function App() {
     [shouldReduceMotion],
   );
 
+  if (isMobile) return <MobilePortfolio profile={profile} projects={projects} experiences={experiences} skills={skills} education={education} certifications={certifications} awards={awards} alsoWorkedWith={alsoWorkedWith} Portrait={Portrait} ProjectVideo={ProjectVideo} ScreenshotGallery={ScreenshotGallery} optimizedImage={optimizedImage} />;
+
   return (
     <main>
+      <a className="skipLink" href="#projects">Skip to projects</a>
       <ScrollProgress />
       <Spotlight />
       <Header activeSection={activeSection} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
@@ -341,12 +362,20 @@ function App() {
         </div>
       </Section>
       <Section id="projects" eyebrow="Selected projects" title={<>Things I&apos;ve designed, built, and <em>shipped</em>.</>}>
+        <div className="projectToolbar">
+          <div className="projectFilters" role="group" aria-label="Filter projects">
+            {['All', 'AI', 'Personal', 'Professional'].map((filter) => (
+              <button key={filter} type="button" aria-pressed={projectFilter === filter} onClick={() => setProjectFilter(filter)}>{filter}</button>
+            ))}
+          </div>
+          <span className="projectCount" role="status">{String(filteredProjects.length).padStart(2, '0')} projects to explore</span>
+        </div>
         <div className="projectGrid">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard
               project={project}
               index={index}
-              wide={index === projects.length - 1 && projects.length % 2 === 1}
+              wide={index === filteredProjects.length - 1 && filteredProjects.length % 2 === 1}
               key={project.title}
               fadeUp={fadeUp}
             />
@@ -487,24 +516,39 @@ function App() {
 }
 
 function Header({ activeSection, menuOpen, setMenuOpen }) {
+  const headerRef = useRef(null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const dismiss = (event) => {
+      if (event.type === 'keydown' && event.key === 'Escape') {
+        setMenuOpen(false);
+        headerRef.current?.querySelector('.menuButton')?.focus();
+      } else if (event.type === 'pointerdown' && !headerRef.current?.contains(event.target)) setMenuOpen(false);
+    };
+    window.addEventListener('keydown', dismiss);
+    window.addEventListener('pointerdown', dismiss);
+    return () => { window.removeEventListener('keydown', dismiss); window.removeEventListener('pointerdown', dismiss); };
+  }, [menuOpen, setMenuOpen]);
   return (
-    <header className="siteHeader">
+    <header className="siteHeader" ref={headerRef}>
       <a className="brand" href="#top" aria-label={`${profile.name} home`}>
         <Portrait />
       </a>
-      <nav className={menuOpen ? 'nav navOpen' : 'nav'} aria-label="Main navigation">
+      <span className="brandName">Nadine<span> / engineer</span></span>
+      <nav id="main-navigation" className={menuOpen ? 'nav navOpen' : 'nav'} aria-label="Main navigation">
         {navItems.map((item) => (
           <a
             className={activeSection === item ? 'active' : ''}
             href={`#${item.toLowerCase()}`}
             key={item}
+            aria-current={activeSection === item ? 'location' : undefined}
             onClick={() => setMenuOpen(false)}
           >
             {item}
           </a>
         ))}
       </nav>
-      <button className="iconButton menuButton" type="button" onClick={() => setMenuOpen((value) => !value)} aria-label="Toggle menu">
+      <button className="iconButton menuButton" type="button" onClick={() => setMenuOpen((value) => !value)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} aria-controls="main-navigation">
         {menuOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
     </header>
@@ -521,6 +565,7 @@ function Portrait() {
   return (
     <img
       src={profile.photo}
+      width="640" height="640" decoding="async"
       alt={`Portrait of ${profile.name}`}
       onError={() => setFailed(true)}
     />
@@ -539,7 +584,7 @@ function Hero({ fadeUp }) {
 
   return (
     <section className="hero" id="top">
-      <motion.div className="heroCanvas" style={{ y: parallax }} aria-hidden="true">
+      <motion.div className="heroCanvas" style={{ y: shouldReduceMotion ? 0 : parallax }} aria-hidden="true">
         <div className="signal signalOne" />
         <div className="signal signalTwo" />
         <div className="redline redlineOne" />
@@ -550,7 +595,7 @@ function Hero({ fadeUp }) {
       </div>
       <div className="heroLayout">
         <motion.div className="heroText" variants={fadeUp} initial="hidden" animate="visible">
-          <p className="eyebrow">Hi, I&apos;m Nadine — {profile.role}</p>
+          <p className="eyebrow">Full stack engineer / creative problem solver</p>
           <h1 aria-label={profile.name}>
             {nameWords.map((word, i) => (
               <motion.span
@@ -596,8 +641,10 @@ function Hero({ fadeUp }) {
           <div className="portraitFrame">
             <Portrait />
           </div>
+          <figcaption className="portraitCaption"><Code2 size={16} /><span>Thoughtful interfaces.<br /><strong>Solid engineering.</strong></span></figcaption>
         </motion.figure>
       </div>
+      <a className="heroExplore" href="#projects"><span>Explore the projects</span><span aria-hidden="true">↓</span></a>
       <div className="ticker" aria-hidden="true">
         <div className="tickerTrack">
           {[...ticker, ...ticker].map((tech, index) => (
@@ -711,19 +758,7 @@ function Section({ id, eyebrow, title, children }) {
 function ProjectCard({ project, index, wide, fadeUp }) {
   const hasMedia = Boolean(project.media);
   const isVideo = hasMedia && project.media.endsWith('.mp4');
-  const [hovered, setHovered] = useState(false);
-  const [canHover] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches);
-  const videoRef = useRef(null);
-
-  const handleEnter = () => {
-    setHovered(true);
-    videoRef.current?.play().catch(() => {});
-  };
-
-  const handleLeave = () => {
-    setHovered(false);
-    videoRef.current?.pause();
-  };
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.article
@@ -733,9 +768,6 @@ function ProjectCard({ project, index, wide, fadeUp }) {
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
       transition={{ delay: index * 0.06 }}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      onViewportLeave={() => videoRef.current?.pause()}
     >
       <div className="cmdTitlebar">
         <span className="cmdDot cmdDotRed" />
@@ -748,25 +780,9 @@ function ProjectCard({ project, index, wide, fadeUp }) {
           <ScreenshotGallery screens={project.screens} title={project.title} />
         ) : hasMedia ? (
           isVideo ? (
-            <>
-              <video
-                ref={videoRef}
-                src={project.media}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls={canHover ? hovered : true}
-              />
-              {canHover && !hovered && (
-                <span className="videoHint">
-                  <Play size={14} />
-                  Hover to play
-                </span>
-              )}
-            </>
+            <ProjectVideo project={project} />
           ) : (
-            <img src={project.media} alt={`${project.title} preview`} />
+            <img src={optimizedImage(project.media)} alt={`${project.title} preview`} loading="lazy" decoding="async" width="1200" height="750" />
           )
         ) : (
           <div className="mediaPlaceholder">
@@ -778,7 +794,8 @@ function ProjectCard({ project, index, wide, fadeUp }) {
       <div className="projectContent">
         <h3 className="projectTitle">{project.title}</h3>
         <p className="projectSubtitle">{project.type}</p>
-        <p className="projectDesc">{project.description}</p>
+        <p id={`description-${project.title.replace(/\W/g, '')}`} className={`projectDesc${!expanded && project.description.length > 240 ? ' collapsed' : ''}`}>{project.description}</p>
+        {project.description.length > 240 && <button className="readMore" type="button" aria-expanded={expanded} aria-controls={`description-${project.title.replace(/\W/g, '')}`} onClick={() => setExpanded(!expanded)}>{expanded ? 'Less detail −' : 'Explore the details +'}</button>}
         <div className="stackList">
           {project.stack.map((tech) => (
             <small key={tech}>{tech}</small>
@@ -815,10 +832,45 @@ function ProjectCard({ project, index, wide, fadeUp }) {
   );
 }
 
-function ScreenshotGallery({ screens, title }) {
+function optimizedImage(src) {
+  return src.startsWith('/projects/') && src.endsWith('.png') ? `/optimized${src.replace(/\.png$/, '.webp')}` : src;
+}
+
+function ProjectVideo({ project, suspended = false }) {
+  const [started, setStarted] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [buffering, setBuffering] = useState(false);
+  const videoRef = useRef(null);
+  const containerRef = useRef(null);
+  const visible = useInView(containerRef, { amount: 0.15 });
+  const localName = project.media === '/projects/life.mp4' ? 'life' : project.media === '/projects/hakki.mp4' ? 'hakki' : null;
+  const poster = localName ? `/optimized/${localName}-poster.webp` : project.title === 'InnovaLearn' ? '/optimized/innova-poster.webp' : project.title === 'Home Appliances' ? '/optimized/electro-poster.webp' : '/optimized/projects/hacker.webp';
+  const src = localName === 'hakki' ? '/optimized/hakki.mp4' : project.media;
+  useEffect(() => {
+    if (!visible || suspended) videoRef.current?.pause();
+  }, [visible, suspended]);
+  const start = () => { setFailed(false); setBuffering(true); setStarted(true); };
+  return <div className="videoPreview" ref={containerRef}>
+    {started && !failed ? <video ref={videoRef} src={src} poster={poster} controls autoPlay muted playsInline preload="none"
+      onPlaying={() => setBuffering(false)} onWaiting={() => setBuffering(true)} onCanPlay={() => setBuffering(false)} onPause={() => setBuffering(false)} onError={() => { setFailed(true); setBuffering(false); }} /> : <>
+      <img src={poster} loading="lazy" decoding="async" alt={`${project.title} video preview`} />
+      <button type="button" className="videoPlay" onClick={start}><span><Play size={22} fill="currentColor" /></span>{failed ? 'Try demo again' : 'Play project demo'}</button>
+    </>}
+    {buffering && <span className="videoLoading" role="status">Loading demo…</span>}
+    {failed && <a className="videoFallback" href={src} target="_blank" rel="noreferrer">Open video directly ↗</a>}
+  </div>;
+}
+
+function ScreenshotGallery({ screens, title, suspended = false }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [pageVisible, setPageVisible] = useState(!document.hidden);
+  const galleryRef = useRef(null);
+  const touchStart = useRef(null);
+  const visible = useInView(galleryRef, { amount: 0.2 });
+  const reducedMotion = useReducedMotion();
   const [failed, setFailed] = useState({});
 
   const valid = screens.map((src, i) => ({ src, i })).filter(({ i }) => !failed[i]);
@@ -828,14 +880,21 @@ function ScreenshotGallery({ screens, title }) {
   const advance = (step) => {
     if (valid.length <= 1) return;
     setDirection(step);
-    setIndex((i) => (i + step + screens.length) % screens.length);
+    setIndex(valid[(currentPos + step + valid.length) % valid.length].i);
   };
 
   useEffect(() => {
-    if (paused || valid.length <= 1) return;
+    const update = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
+  }, []);
+
+  const autoPlaying = !suspended && !paused && !hovered && visible && pageVisible && !reducedMotion;
+  useEffect(() => {
+    if (!autoPlaying || valid.length <= 1) return;
     const id = setInterval(() => advance(1), 3000);
     return () => clearInterval(id);
-  }, [paused, valid.length, screens.length]);
+  }, [autoPlaying, index, valid.length, screens.length]);
 
   if (!valid.length) {
     return (
@@ -849,31 +908,42 @@ function ScreenshotGallery({ screens, title }) {
   return (
     <div
       className="screensGallery"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      ref={galleryRef}
+      role="region" aria-label={`${title} screenshots`}
+      onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(true); }}
+      onMouseLeave={() => setHovered(false)}
+      onTouchStart={(event) => { touchStart.current = {x: event.touches[0].clientX, y: event.touches[0].clientY}; }}
+      onTouchEnd={(event) => {
+        if (!touchStart.current) return;
+        const dx = event.changedTouches[0].clientX - touchStart.current.x;
+        const dy = event.changedTouches[0].clientY - touchStart.current.y;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) advance(dx < 0 ? 1 : -1);
+        touchStart.current = null;
+      }}
     >
       <div className="screensStage">
-        <AnimatePresence initial={false} custom={direction}>
+        <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.img
             key={current.src}
-            src={current.src}
+            src={optimizedImage(current.src)}
             alt={`${title} screenshot ${current.i + 1}`}
             loading="lazy"
+            decoding="async"
             className="screensImg"
-            initial={{ opacity: 0, x: direction * 90 }}
+            initial={{ opacity: 0, x: reducedMotion ? 0 : direction * 40 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -90 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0, x: reducedMotion ? 0 : direction * -40 }}
+            transition={{ duration: reducedMotion ? 0 : 0.22 }}
             onError={() => setFailed((value) => ({ ...value, [current.i]: true }))}
           />
         </AnimatePresence>
         <span className="screensCounter">
           {currentPos + 1} / {valid.length}
         </span>
-        <span className="screensState">
-          {paused ? <Pause size={12} /> : <Play size={12} />}
-          {paused ? 'Paused' : 'Auto'}
-        </span>
+        <button className="screensState" type="button" onClick={() => setPaused(!paused)} aria-label={paused ? 'Resume automatic slideshow' : 'Pause automatic slideshow'} aria-pressed={paused}>
+          {autoPlaying ? <Pause size={12} /> : <Play size={12} />}
+          {autoPlaying ? 'Auto' : 'Paused'}
+        </button>
         <button className="screensNav screensPrev" type="button" onClick={() => advance(-1)} aria-label="Previous screenshot">
           <ChevronLeft size={18} />
         </button>
@@ -889,6 +959,7 @@ function ScreenshotGallery({ screens, title }) {
             className={i === current.i ? 'screensDot active' : 'screensDot'}
             onClick={() => setIndex(i)}
             aria-label={`Go to screenshot ${pos + 1}`}
+            aria-current={i === current.i ? 'true' : undefined}
           />
         ))}
       </div>

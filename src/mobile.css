@@ -1,0 +1,153 @@
+/* The mobile app shell is mounted only below 768px. Desktop uses its existing page. */
+@media (max-width: 767px) {
+  .mobileApp { min-height: 100svh; background: radial-gradient(ellipse at 90% 0, #50101d30, transparent 400px), #09090b; color: #f2f0eb; padding-bottom: calc(91px + env(safe-area-inset-bottom)); }
+  .mobileApp button, .mobileApp a { touch-action: manipulation; }
+  .mobileApp button { font-family: inherit; cursor: pointer; }
+  .mobileApp summary:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; border-radius: 16px; }
+  .mobileApp h1, .mobileApp h2, .mobileApp h3 { letter-spacing: -.035em; }
+  .mobileApp em { color: var(--red); font-style: normal; }
+  .appHeader { position: sticky; top: 0; z-index: 15; display: flex; align-items: center; justify-content: space-between; min-height: 76px; padding: max(12px, env(safe-area-inset-top)) 20px 12px; background: #09090bf0; backdrop-filter: blur(16px); border-bottom: 1px solid #ffffff08; }
+  .appBrand { display: flex; align-items: center; gap: 11px; font-size: .91rem; font-weight: 600; }
+  .appAvatar { width: 39px; height: 39px; border-radius: 50%; overflow: hidden; border: 1px solid #f0445240; }
+  .appAvatar img { width: 100%; height: 100%; object-fit: cover; object-position: 51% 32%; }
+  .appBrandSub { display: block; margin-top: 4px; color: #a19b9e; font-size: .64rem; font-weight: 400; }
+  .appHeaderAction { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #ffffff13; border-radius: 15px; color: #ded8dc; background: #ffffff03; }
+  .appScreen { padding: 0 20px; outline: none; }
+  .appIntro { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 128px; align-items: center; gap: 14px 12px; padding: 29px 0 22px; }
+  .appEyebrow { color: var(--red); font-family: var(--font-mono); font-size: .63rem; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 12px; }
+  .appIntro h1 { font-size: clamp(1.75rem, 7.5vw, 2.2rem); line-height: 1.13; letter-spacing: -.055em; margin: 0 0 13px; }
+  .appIntroText > p:last-child { font-size: .76rem; line-height: 1.65; color: #a9a4a8; margin: 0; }
+  .appHeroPhoto { position: relative; aspect-ratio: 1; width: 100%; align-self: center; border: 1px solid #f0445240; border-radius: 50%; box-shadow: 0 0 0 6px #f0445208; background: #201015; }
+  .appHeroPhoto > img { width: 100%; height: 100%; object-fit: cover; object-position: 52% 38%; border-radius: inherit; }
+  .appHeroPhoto > span { position: absolute; bottom: -9px; left: -11px; display: grid; place-items: center; width: 35px; height: 35px; border-radius: 12px; color: var(--red); background: #201117; border: 1px solid #f0445240; transform: rotate(-9deg); }
+  .appIntroActions { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 9px; grid-column: 1 / -1; margin-top: 8px; }
+  .appButton { min-height: 48px; padding: 0 15px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid #ffffff16; border-radius: 14px; color: #ebe7e9; background: #ffffff04; font-size: .8rem; font-weight: 600; }
+  .appButtonPrimary { color: #fff; border-color: var(--red); background: var(--red); box-shadow: 0 5px 20px #f0445215; }
+  .appButton:active { transform: scale(.98); }
+  .appQuickFacts { display: flex; align-items: center; gap: 16px; padding: 0 0 24px; border-bottom: 1px solid #ffffff0d; }
+  .appQuickFacts span { display: flex; align-items: center; gap: 7px; color: #aaa4a8; font-size: .66rem; }
+  .appQuickFacts svg { color: #c76b77; }
+  .appSectionHeading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 22px 0 15px; }
+  .appSectionHeading h2 { font-size: 1.04rem; font-weight: 500; margin: 0; }
+  .appSectionHeading > a { display: flex; align-items: center; justify-content: flex-end; gap: 3px; min-height: 36px; color: var(--red); font-size: .72rem; white-space: nowrap; }
+  .appFeaturedRail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 20px; scrollbar-width: none; margin: 0 -20px; padding: 0 20px 3px; overscroll-behavior-x: contain; }
+  .appFeaturedRail::-webkit-scrollbar { display: none; }
+  .appProjectCard { background: #131215; border: 1px solid #ffffff0e; border-radius: 21px; overflow: hidden; min-width: 0; }
+  .appProjectCompact { flex: 0 0 86%; scroll-snap-align: start; }
+  .appProjectMedia { width: 100%; position: relative; aspect-ratio: 16 / 10; background: #101014; overflow: hidden; }
+  .appProjectCompact .appProjectMedia { aspect-ratio: 16 / 9; }
+  .appProjectMedia > img, .appProjectMedia video { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .appProjectMedia .screensGallery { height: 100%; }
+  .appProjectMedia .screensStage { min-height: 0; }
+  .appProjectMedia .videoPlay { font-size: .65rem; gap: 10px; }
+  .appProjectMedia .videoPlay > span { width: 47px; height: 47px; }
+  .appProjectMedia .screensNav { width: 44px; height: 44px; }
+  .appProjectMedia .screensState { min-height: 32px; font-size: .6rem; }
+  .appProjectMedia .screensCounter { font-size: .6rem; }
+  .appProjectMedia .screensDots { padding: 0; }
+  .appProjectMedia .screensDot { height: 32px; }
+  .appProjectInfo { padding: 15px 17px 17px; }
+  .appProjectInfo > p { margin: 0 0 5px; font-size: .62rem; color: #a49a9f; line-height: 1.5; }
+  .appProjectInfo h2 { margin: 0; font-size: 1.22rem; }
+  .appProjectInfo h2 > button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 32px; padding: 0; color: #f2f0eb; border: 0; background: none; font: inherit; text-align: left; }
+  .appProjectInfo h2 svg { color: var(--red); flex-shrink: 0; }
+  .appSwipeHint { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 11px 0 20px; font-size: .62rem; color: #8e858b; }
+  .appSwipeHint span { font-size: 1rem; color: #bf7781; }
+  .appAboutTeaser { display: flex; align-items: center; gap: 13px; padding: 16px; border: 1px solid #ffffff0d; border-radius: 17px; background: #ffffff02; font-size: .78rem; margin-bottom: 8px; }
+  .appTeaserIcon { display: grid; place-items: center; width: 37px; height: 37px; border-radius: 13px; color: #e5b4bd; background: #f0445210; }
+  .appAboutTeaser small { display: block; font-size: .65rem; color: #958c92; margin-top: 5px; }
+  .appAboutTeaser > svg { margin-left: auto; color: #958c92; }
+  .appBottomNav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 8px 12px calc(9px + env(safe-area-inset-bottom)); border-top: 1px solid #ffffff0e; background: #101013f5; backdrop-filter: blur(18px); }
+  .appBottomNav > a { display: flex; align-items: center; flex-direction: column; gap: 4px; min-height: 51px; color: #8b858c; font-size: .62rem; letter-spacing: .01em; }
+  .appBottomNav > a > span { display: grid; place-items: center; width: 51px; height: 31px; border-radius: 12px; transition: background .15s; }
+  .appBottomNav > a[aria-current='page'] { color: #ff7a87; }
+  .appBottomNav > a[aria-current='page'] > span { background: #f0445218; }
+  .appPageHeading { padding-top: 26px; margin-bottom: 22px; }
+  .appPageHeading h1 { font-size: clamp(1.7rem, 7.5vw, 2.3rem); letter-spacing: -.055em; line-height: 1.16; margin-bottom: 11px; }
+  .appPageHeading > p:last-child:not(.appEyebrow) { font-size: .76rem; color: #a0989f; line-height: 1.6; margin-bottom: 0; }
+  .appFilterBar { display: flex; gap: 7px; }
+  .appFilterBar > button { min-height: 44px; flex: 1; padding: 0 8px; font-size: .69rem; border-radius: 13px; border: 1px solid #ffffff12; color: #a59da4; background: #151318; }
+  .appFilterBar > button[aria-pressed='true'] { background: #f0e9ec; border-color: #f0e9ec; color: #1c151a; font-weight: 600; }
+  .appResults { color: #958b93; font: .62rem var(--font-mono); margin: 17px 0; }
+  .appProjectList { display: grid; gap: 20px; }
+  .appCardStack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+  .appCardStack > span { background: #ffffff04; border: 1px solid #ffffff09; padding: 5px 7px; border-radius: 6px; font-size: .6rem; color: #a79ea4; }
+  .appCardActions { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 12px; margin-top: 14px; border-top: 1px solid #ffffff0b; }
+  .appCardActions > button, .appCardActions > a { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 40px; padding: 0; border: 0; color: #dbd2d8; background: none; font-size: .72rem; }
+  .appCardActions > a { padding: 0 13px; border-radius: 10px; color: #ff8997; background: #f0445212; }
+  .appCardActions > span { display: flex; align-items: center; gap: 5px; font-size: .63rem; color: #a299a1; }
+  .appSegments { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 5px; background: #ffffff05; border: 1px solid #ffffff09; border-radius: 15px; margin-bottom: 23px; }
+  .appSegments > button { min-height: 41px; border: 0; border-radius: 10px; background: transparent; color: #9d949c; font-size: .72rem; }
+  .appSegments > button[aria-selected='true'] { color: #f1e9ee; background: #332028; box-shadow: 0 2px 6px #0002; }
+  .appStoryCard { display: grid; justify-items: center; text-align: center; border: 1px solid #ffffff0c; border-radius: 22px; padding: 24px 21px; background: linear-gradient(145deg, #29151d60, #121115); margin-bottom: 17px; }
+  .appStoryPortrait { width: 96px; height: 96px; margin-bottom: 17px; overflow: hidden; border: 1px solid #f0445250; border-radius: 50%; }
+  .appStoryPortrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+  .appStoryCard h2 { font-size: 1.35rem; margin: 0 0 6px; }
+  .appStoryCard > span { color: #bd939f; font-size: .71rem; }
+  .appStoryCard > p { margin: 17px 0; color: #aaa0a8; font-size: .81rem; line-height: 1.75; }
+  .appLanguageTags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .appLanguageTags > span { font-size: .62rem; padding: 6px 11px; color: #c8bdc4; border: 1px solid #ffffff12; border-radius: 8px; }
+  .appAccordion { border: 1px solid #ffffff0d; border-radius: 16px; background: #141217; margin-bottom: 10px; }
+  .appAccordion > summary { display: flex; align-items: center; gap: 12px; justify-content: space-between; padding: 17px 15px; min-height: 62px; font-size: .78rem; cursor: pointer; list-style: none; }
+  .appAccordion > summary::-webkit-details-marker { display: none; }
+  .appAccordion > summary > span:first-child:not(.appExperienceNumber) { display: flex; align-items: center; gap: 10px; }
+  .appAccordion > summary svg { flex-shrink: 0; color: #ad7a87; }
+  .appAccordion > summary > svg { color: #a0929c; transition: transform .2s; }
+  .appAccordion[open] > summary > svg { transform: rotate(180deg); }
+  .appAccordionBody { padding: 0 17px 18px; color: #afa2ad; font-size: .79rem; line-height: 1.75; margin: 0; }
+  .appAccordionBody h3 { font-size: .83rem; color: #e1d8df; line-height: 1.6; margin-bottom: 8px; }
+  .appAccordionBody p { margin-bottom: 14px; }
+  .appAccordionBody small { display: block; font-size: .68rem; color: #8d808c; }
+  .appEducationItem { border-bottom: 1px solid #ffffff09; padding-bottom: 9px; margin-bottom: 15px; }
+  .appEducationItem p { font-size: .71rem; }
+  .appExperienceNumber { font-family: var(--font-mono); font-size: .78rem; color: var(--red); align-self: start; padding-top: 4px; }
+  .appExperience > summary { align-items: center; }
+  .appExperienceLabel { flex: 1; line-height: 1.6; }
+  .appExperienceLabel small { display: block; font-size: .67rem; color: #a095a0; margin-top: 3px; }
+  .appExperience ul { padding-left: 17px; margin: 10px 0 0; }
+  .appExperience li + li { margin-top: 10px; }
+  .appPanelHint { font-size: .76rem; color: #a297a1; line-height: 1.7; margin: 0 0 18px; }
+  .appSkillTags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .appSkillTags > span { padding: 7px 10px; border: 1px solid #ffffff0f; border-radius: 9px; font-size: .7rem; color: #c4b6c2; background: #ffffff04; }
+  .appContact { padding-top: 28px; }
+  .appContactSymbol { display: grid; place-items: center; width: 70px; height: 70px; border: 1px solid #f0445235; background: #f0445210; border-radius: 24px; color: var(--red); margin: 0 0 25px; transform: rotate(-7deg); }
+  .appContact h1 { font-size: clamp(1.8rem, 8.3vw, 2.4rem); line-height: 1.16; margin-bottom: 18px; }
+  .appContact > p:not(.appEyebrow):not(.appCopyStatus) { color: #aaa0a8; font-size: .8rem; line-height: 1.8; margin-bottom: 24px; }
+  .appContact > .appButton { display: flex; }
+  .appCopyEmail { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; font-size: .74rem; color: #a99ca6; }
+  .appCopyEmail > span { user-select: text; overflow-wrap: anywhere; }
+  .appCopyEmail > button { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 10px; background: none; color: #b995a7; flex-shrink: 0; }
+  .appCopyStatus { min-height: 15px; font-size: .67rem; color: #d996a9; margin: 0 0 17px; text-align: center; }
+  .appContactLinks { border: 1px solid #ffffff0d; border-radius: 19px; overflow: hidden; }
+  .appContactLinks > a { display: flex; align-items: center; gap: 15px; min-height: 78px; padding: 15px 18px; background: #ffffff02; color: #d8cbd6; }
+  .appContactLinks > a + a { border-top: 1px solid #ffffff0b; }
+  .appContactLinks > a > span { flex: 1; font-size: .82rem; }
+  .appContactLinks small { display: block; margin-top: 5px; font-size: .66rem; color: #958693; }
+  .appContactLinks > a > svg:last-child { color: #ab7c94; }
+  .appProjectSheet { position: fixed; inset: auto 0 0; width: 100%; max-width: 620px; max-height: calc(100dvh - max(20px, env(safe-area-inset-top))); padding: 0; margin: auto auto 0; border: 1px solid #ffffff1a; border-bottom: 0; border-radius: 26px 26px 0 0; background: #121014; color: #eee7ed; overscroll-behavior: contain; box-shadow: 0 -30px 100px #0008; }
+  .appProjectSheet[open] { animation: appSheetEnter .22s ease-out; }
+  .appProjectSheet::backdrop { background: #030204b8; backdrop-filter: blur(6px); }
+  .appSheetBar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; border-bottom: 1px solid #ffffff0b; background: #121014f5; backdrop-filter: blur(12px); font-size: .7rem; color: #aa96a7; }
+  .appSheetBar > button { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 15px; border: 1px solid #ffffff12; background: #ffffff06; color: #e4d8e0; }
+  .appSheetContent { padding: 25px 20px max(26px, env(safe-area-inset-bottom)); }
+  .appSheetContent > h2 { font-size: 1.9rem; margin: 0 0 20px; }
+  .appSheetContent > .appProjectMedia { border-radius: 15px; }
+  .appSheetDescription { margin: 22px 0; font-size: .87rem; line-height: 1.85; color: #b5a8b2; }
+  .appSheetContent > h3 { font-size: .84rem; margin-bottom: 13px; }
+  .appSheetLinks { display: grid; grid-template-columns: 1.4fr 1fr; gap: 9px; margin-top: 26px; }
+  .appSheetNda { display: flex; align-items: center; gap: 9px; padding: 15px; font-size: .74rem; color: #b8a2b0; border: 1px dashed #ffffff20; border-radius: 12px; margin-top: 24px; }
+  @keyframes appSheetEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+}
+@media (max-width: 360px) {
+  .appHeader { padding-left: 16px; padding-right: 16px; }
+  .appScreen { padding: 0 16px; }
+  .appIntro { grid-template-columns: minmax(0, 1fr) 112px; gap: 13px 9px; }
+  .appIntro h1 { font-size: 1.6rem; }
+  .appIntroText > p:last-child { font-size: .69rem; }
+  .appIntroActions .appButton { padding: 0 10px; font-size: .72rem; }
+  .appFeaturedRail { margin: 0 -16px; padding-left: 16px; padding-right: 16px; scroll-padding-left: 16px; }
+  .appQuickFacts { gap: 11px; }
+  .appQuickFacts span { font-size: .62rem; }
+  .appFilterBar { gap: 5px; }
+  .appFilterBar > button { font-size: .63rem; padding: 0 5px; }
+}
