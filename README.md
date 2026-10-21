@@ -1,7 +1,7 @@
 # Nadine Mlayeh — Portfolio
 
 A personal portfolio built with React + Vite, designed around a black & red aesthetic with subtle motion. Fully responsive, deploy-ready on Vercel.
-
+### 🌐 [View Live Portfolio](https://nadine-mlayeh.vercel.app/)
 ## Tech stack
 
 - **React 19** + **Vite 7**
